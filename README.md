@@ -1,319 +1,183 @@
-<<<<<<< HEAD
-<div align="center">
+# CrewChat 💬
 
-# QUICK-CHAT 💬
-
-Real-Time Messaging, Instant Connections
-
-![Last Commit](https://img.shields.io/github/last-commit/elyse502/quick-chat?style=flat-square) 
-![Languages](https://img.shields.io/github/languages/top/elyse502/quick-chat?style=flat-square&color=blue)
-![License](https://img.shields.io/github/license/elyse502/quick-chat?style=flat-square)
-
-*Powered by cutting-edge technologies:*
-
-![Socket.io](https://img.shields.io/badge/Socket.io-010101?style=flat-square&logo=socket.io&logoColor=white)
-![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)
-
-## LIVE - DEMO 🌐
-Visit the 👉 [_LINK 🔗_](https://quick-chat-nine-beta.vercel.app)
-
-</div>
-
-<br /><hr /><br />
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Environment Variables](#environment-variables)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Real-Time Events](#real-time-events)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
+A modern real-time chat application built with the MERN stack that enables secure one-to-one messaging with instant communication using Socket.IO. CrewChat provides authentication, online user status, media sharing, and a responsive user interface for a seamless chatting experience.
 
 ---
 
-## Overview
+## 🚀 Features
 
-Quick-Chat is a full-stack real-time chat application that enables instant messaging with features like:
-
-- 🔐 Secure user authentication
-- ⚡ Real-time message delivery
-- 👥 User profiles and status
-- 📱 Responsive design for all devices
-- 🔄 Message history persistence
-- 🔊 Notification system
-
-Built with modern web technologies to deliver a seamless chatting experience.
-
----
-
-## Key Features
-
-### Real-Time Communication
-- Instant message delivery with Socket.io
-- Typing indicators
-- Online/offline status
-- Read receipts
-
-### User Experience
-- Clean, modern interface
-- Responsive design
-- Dark/light mode
-- Emoji support
-- Message search
-
-### Security
-- JWT authentication
-- Password encryption
-- Protected routes
-- Session management
-
-### Advanced Functionality
-- Message history
-- User profiles
-- Notification system
-- Image/file sharing (via Cloudinary)
+- User Authentication (JWT)
+- Secure Login & Registration
+- Real-time Messaging using Socket.IO
+- Online/Offline User Status
+- Image Sharing with Cloudinary
+- Protected Routes
+- Responsive User Interface
+- MongoDB Database Integration
+- RESTful API Architecture
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
-- **React** with Vite
-- **Socket.io-client** for real-time updates
-- **Context API** for state management
-- **Axios** for HTTP requests
-- **Tailwind CSS** for styling
-- **React Icons** for beautiful icons
+
+- React.js
+- Vite
+- React Router
+- Axios
+- Tailwind CSS
+- React Hot Toast
 
 ### Backend
-- **Node.js** with **Express**
-- **Socket.io** for WebSocket communication
-- **MongoDB** with **Mongoose**
-- **JWT** for authentication
-- **Bcrypt** for password hashing
-- **Cloudinary** for media storage
 
-### DevOps
-- **Vercel** for frontend hosting
-- **Render** for backend hosting
-- **GitHub Actions** for CI/CD
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- Socket.IO
+- Cloudinary
+- Bcrypt.js
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
-```groovy
-quick-chat/
-├── client/                  # Frontend application
-│   ├── public/             # Static assets
-│   ├── src/
-│   │   ├── assets/         # Images, icons
-│   │   ├── components/     # Reusable components
-│   │   │   ├── ChatContainer.jsx
-│   │   │   ├── Sidebar.jsx
-│   │   │   └── RightSidebar.jsx
-│   │   ├── context/        # Global state
-│   │   │   ├── AuthContext.jsx
-│   │   │   └── ChatContext.jsx
-│   │   ├── lib/            # Utilities
-│   │   │   └── utils.js
-│   │   ├── pages/          # Route pages
-│   │   │   ├── HomePage.jsx
-│   │   │   ├── LoginPage.jsx
-│   │   │   └── ProfilePage.jsx
-│   │   └── ...             # Other config files
+```
+CrewChat/
 │
-├── server/                 # Backend application
-│   ├── controllers/        # Business logic
-│   │   ├── messageController.js
-│   │   └── userController.js
-│   ├── lib/                # Utilities
-│   │   ├── cloudinary.js
-│   │   ├── db.js
-│   │   └── utils.js
-│   ├── middleware/         # Auth middleware
-│   │   └── auth.js
-│   ├── models/             # Database models
-│   │   ├── Messages.js
-│   │   └── User.js
-│   ├── routes/             # API routes
-│   │   ├── messageRoutes.js
-│   │   └── userRoutes.js
-│   └── ...                 # Other server files
+├── client/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── lib/
+│   ├── server.js
+│   └── package.json
+│
+└── README.md
 ```
 
 ---
 
-## Getting Started
+## ⚙️ Installation
 
-### Prerequisites
+### Clone the repository
 
-- Node.js (v18+)
-- npm (v9+)
-- MongoDB Atlas account or local MongoDB
-- Cloudinary account (for media storage)
-
-### Installation
-
-1. Clone the repository:
-```console
-git clone https://github.com/elyse502/quick-chat.git
-cd quick-chat
+```bash
+git clone https://github.com/Kuresh-98/CrewChat.git
 ```
 
-2. Install dependencies for both client and server:
-```console
-# Install client dependencies
-cd client && npm install
+### Navigate into the project
 
-# Install server dependencies
-cd ../server && npm install
+```bash
+cd CrewChat
 ```
 
-3. Set up environment variables:
-Create `.env` files in both `client` and `server` directories with required credentials.
+---
 
-### Environment Variables
+### Backend Setup
 
-**Server (.env)**
+```bash
+cd server
+npm install
+```
+
+Create a `.env` file inside the server directory.
+
+Example:
+
 ```env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+PORT=5000
+
+MONGODB_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_jwt_secret
+
+CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-PORT=5000
 ```
 
-**Client (.env)**
-```env
-VITE_API_BASE_URL=http://localhost:5000
-VITE_SOCKET_URL=http://localhost:5000
-```
+Run the backend
 
-4. Start the development servers:
-```console
-# In one terminal (server)
-cd server && npm run dev
-
-# In another terminal (client)
-cd client && npm run dev
+```bash
+npm start
 ```
 
 ---
 
-## Usage
+### Frontend Setup
 
-1. **Register/Login**: Create an account or log in
-2. **Find Contacts**: Search for other users
-3. **Start Chatting**: Select a contact and begin messaging
-4. **Real-Time Updates**: See messages appear instantly
-5. **Profile Management**: Update your profile picture and status
-
----
-
-## API Endpoints
-
-### Authentication
-| Method | Endpoint          | Description          |
-|--------|-------------------|----------------------|
-| POST   | /api/auth/register| Register new user    |
-| POST   | /api/auth/login   | Login user           |
-
-### Users
-| Method | Endpoint          | Description          |
-|--------|-------------------|----------------------|
-| GET    | /api/users        | Get all users        |
-| GET    | /api/users/:id    | Get specific user    |
-| PUT    | /api/users/:id    | Update user          |
-
-### Messages
-| Method | Endpoint           | Description          |
-|--------|--------------------|----------------------|
-| GET    | /api/messages/:chatId | Get chat messages |
-| POST   | /api/messages      | Send new message    |
+```bash
+cd client
+npm install
+npm run dev
+```
 
 ---
 
-## Real-Time Events
+## 📡 API Features
 
-### Emitted Events
-- `new-user` - When a user connects
-- `send-message` - When sending a message
-- `typing` - When user is typing
-- `stop-typing` - When user stops typing
-
-### Received Events
-- `receive-message` - When receiving a message
-- `user-connected` - When another user connects
-- `user-typing` - When another user is typing
+- User Registration
+- User Login
+- Logout
+- Update Profile
+- Send Messages
+- Receive Messages
+- Upload Images
+- Get Chat History
 
 ---
 
-## Deployment
+## 🔒 Security
 
-### Frontend
-[![Deploy with Vercel](https://vercel.com/button)](https://quick-chat-nine-beta.vercel.app)
-
-### Backend
-Deploy to Render, Vercel, or other Node.js hosting services with MongoDB connection.
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- JWT Authentication
+- Password Hashing using bcrypt
+- Protected API Routes
+- Environment Variable Configuration
 
 ---
 
+## 📸 Screenshots
 
-## License
+Add screenshots of:
 
-Distributed under the MIT License. See [LICENSE](https://github.com/elyse502/quick-chat/blob/main/LICENSE) for more information.
-
----
-
-## 📞 Contact
-For any questions or support, please contact:
-- [**NIYIBIZI Elysée**](https://linktr.ee/niyibizi_elysee)👨🏿‍💻 | [Github](https://github.com/elyse502) | [Linkedin](https://www.linkedin.com/in/niyibizi-elys%C3%A9e/) | [Twitter](https://twitter.com/Niyibizi_Elyse).
-- **Email**: <elyseniyibizi502@gmail.com>
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/niyibizi-elys%C3%A9e/) [![@phenrysay](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/Niyibizi_Elyse) [![pH-7](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/elyse502)
+- Login Page
+- Registration Page
+- Chat Dashboard
+- Messaging Screen
+- Profile Page
 
 ---
 
-<div align="center">
+## 📈 Future Enhancements
 
-**Quick-Chat** - Where conversations happen in real-time! 🚀✨
+- Group Chats
+- Voice Calling
+- Video Calling
+- Message Reactions
+- Read Receipts
+- Typing Indicators
+- Push Notifications
+- Message Search
 
-**Made with ❤️ by <i>[Elysée NIYIBIZI](https://elyse502.github.io/Elysee-Portfolio/)</i>**
+---
 
-[⬆ Back to Top](#table-of-contents)
+## 👨‍💻 Author
 
-</div>
+**Kuresh Garbada**
 
+GitHub: https://github.com/Kuresh-98
 
+---
 
+## ⭐ Support
 
-
-=======
-# CrewChat
-this is a chat web app where parties can chat in real time
->>>>>>> 54b3ed70248e2696b70b2ba23210a216f1aea1d6
+If you found this project useful, consider giving it a ⭐ on GitHub.
