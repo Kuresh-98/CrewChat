@@ -1,27 +1,31 @@
 # CrewChat 💬
 
-A modern real-time chat application built with the MERN stack that enables secure one-to-one messaging with instant communication using Socket.IO. CrewChat provides authentication, online user status, media sharing, and a responsive user interface for a seamless chatting experience.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-brightgreen)](https://crew-chat.vercel.app)
+
+A modern real-time chat application built with the MERN stack that enables secure one-to-one messaging with instant communication using Socket.IO. CrewChat requires users to add each other as friends using unique usernames before they can chat, ensuring privacy and control over who can message you.
 
 ---
 
 ## 🚀 Features
 
-- User Authentication (JWT)
-- Secure Login & Registration
-- Real-time Messaging using Socket.IO
-- Online/Offline User Status
-- Image Sharing with Cloudinary
-- Protected Routes
-- Responsive User Interface
-- MongoDB Database Integration
-- RESTful API Architecture
+- **Rebranded to CrewChat**: Modern design system and updated typography.
+- **Unique Username Sign-up**: Register with a unique username for easy identification.
+- **Friend Invitation System**: 
+  - Search other users by their unique username.
+  - Send and receive friend invitations.
+  - Accept or decline pending requests with real-time updates and notification badges.
+  - Chat is restricted until a friend invitation is accepted.
+- **Real-time Messaging**: Instant message delivery using Socket.IO.
+- **Online/Offline User Status**: See who's online in real-time.
+- **Image Sharing**: Send images within chat using Cloudinary storage.
+- **Protected Routes**: JWT-secured endpoints and middleware.
+- **Database Seeding**: Easily seed realistic user profiles for local testing.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-
 - React.js
 - Vite
 - React Router
@@ -30,15 +34,13 @@ A modern real-time chat application built with the MERN stack that enables secur
 - React Hot Toast
 
 ### Backend
-
 - Node.js
 - Express.js
-- MongoDB
-- Mongoose
-- JWT Authentication
+- MongoDB / Mongoose
 - Socket.IO
 - Cloudinary
 - Bcrypt.js
+- JWT Authentication
 
 ---
 
@@ -59,6 +61,7 @@ CrewChat/
 │   ├── middleware/
 │   ├── lib/
 │   ├── server.js
+│   ├── seed.js
 │   └── package.json
 │
 └── README.md
@@ -66,107 +69,80 @@ CrewChat/
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Installation & Setup
 
-### Clone the repository
-
+### 1. Clone the repository
 ```bash
 git clone https://github.com/Kuresh-98/CrewChat.git
-```
-
-### Navigate into the project
-
-```bash
 cd CrewChat
 ```
 
----
-
-### Backend Setup
-
+### 2. Backend Setup
 ```bash
 cd server
 npm install
 ```
 
-Create a `.env` file inside the server directory.
-
-Example:
-
+Create a `.env` file in the `server` directory:
 ```env
 PORT=5000
-
 MONGODB_URI=your_mongodb_connection_string
-
 JWT_SECRET=your_jwt_secret
-
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-Run the backend
+#### Seed Database
+To clear the database and seed it with 6 pre-connected genuine users (great for testing messaging right away):
+```bash
+npm run seed
+```
 
+#### Run the backend
 ```bash
 npm start
 ```
 
 ---
 
-### Frontend Setup
-
+### 3. Frontend Setup
 ```bash
 cd client
 npm install
+```
+
+Create a `.env` file in the `client` directory:
+```env
+VITE_BACKEND_URL=http://localhost:5000
+```
+
+#### Run the frontend
+```bash
 npm run dev
 ```
 
 ---
 
-## 📡 API Features
+## 📡 API Endpoints
 
-- User Registration
-- User Login
-- Logout
-- Update Profile
-- Send Messages
-- Receive Messages
-- Upload Images
-- Get Chat History
+### Authentication & Users
+- `POST /api/auth/signup` - Register a new user with fullName, username, email, password, and bio.
+- `POST /api/auth/login` - Login with email and password.
+- `PUT /api/auth/update-profile` - Update user bio, avatar, and fullName.
+- `GET /api/auth/check` - Check user JWT token status.
 
----
+### Friend Invitation System
+- `GET /api/auth/search-user?username=...` - Search for a user globally by username and see friendship status.
+- `POST /api/auth/friend-request/send` - Send a friend request.
+- `GET /api/auth/friend-requests` - Get pending received friend requests.
+- `POST /api/auth/friend-request/respond` - Accept or decline friend requests.
 
-## 🔒 Security
-
-- JWT Authentication
-- Password Hashing using bcrypt
-- Protected API Routes
-- Environment Variable Configuration
-
----
-
-## 📸 Screenshots
-
-Add screenshots of:
-
-- Login Page
-- Registration Page
-- Chat Dashboard
-- Messaging Screen
-- Profile Page
-
----
-
-## 📈 Future Enhancements
-
-- Group Chats
-- Voice Calling
-- Video Calling
-- Message Reactions
-- Read Receipts
-- Typing Indicators
-- Push Notifications
-- Message Search
+### Messages
+- `GET /api/messages/users` - Fetch list of active friends (chat sidebar contacts).
+- `GET /api/messages/:id` - Fetch chat history with a specific friend.
+- `POST /api/messages/send/:id` - Send a text or image message.
+- `PUT /api/messages/mark/:id` - Mark messages as read.
 
 ---
 
@@ -174,7 +150,7 @@ Add screenshots of:
 
 **Kuresh Garbada**
 
-GitHub: https://github.com/Kuresh-98
+GitHub: [https://github.com/Kuresh-98](https://github.com/Kuresh-98)
 
 ---
 
