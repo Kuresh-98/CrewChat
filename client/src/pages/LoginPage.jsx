@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 const LoginPage = () => {
   const [currState, setCurrentState] = useState("Sign up");
   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [bio, setBio] = useState("");
@@ -23,6 +24,7 @@ const LoginPage = () => {
     const isSignup = currState === "Sign up";
     const result = await login(isSignup ? "signup" : "login", {
       fullName,
+      username,
       email,
       password,
       bio,
@@ -33,6 +35,7 @@ const LoginPage = () => {
       setCurrentState("Login");
       setIsDataSubmitted(false);
       setFullName("");
+      setUsername("");
       setEmail("");
       setPassword("");
       setBio("");
@@ -42,7 +45,10 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl">
       {/* -------- left -------- */}
-      <img src={assets.logo_big} alt="logo" className="w-[min(30vw,250px)]" />
+      <div className="flex flex-col items-center gap-4 select-none">
+        <img src={assets.logo_icon} alt="logo" className="w-[min(20vw,120px)] animate-pulse" />
+        <h1 className="text-white text-5xl font-black tracking-wider bg-gradient-to-r from-purple-400 to-violet-500 bg-clip-text text-transparent drop-shadow-md">CrewChat</h1>
+      </div>
 
       {/* -------- right -------- */}
       <form
@@ -62,14 +68,24 @@ const LoginPage = () => {
         </h2>
 
         {currState === "Sign up" && !isDataSubmitted && (
-          <input
-            onChange={(e) => setFullName(e.target.value)}
-            value={fullName}
-            type="text"
-            className="p-2 border border-gray-500 rounded-md focus:outline-none"
-            placeholder="Full Name"
-            required
-          />
+          <>
+            <input
+              onChange={(e) => setFullName(e.target.value)}
+              value={fullName}
+              type="text"
+              className="p-2 border border-gray-500 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-violet-500"
+              placeholder="Full Name"
+              required
+            />
+            <input
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              type="text"
+              className="p-2 border border-gray-500 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-violet-500"
+              placeholder="Username"
+              required
+            />
+          </>
         )}
 
         {!isDataSubmitted && (

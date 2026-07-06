@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [pendingRequests, setPendingRequests] = useState([]);
   const socketRef = useRef(null);
 
   // Check if user is authenticated and if so, set the user data and connect the socket
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }) => {
       if (data.success) {
         setAuthUser(data.user);
         connectSocket(data.user);
+        fetchFriendRequests();
       }
     } catch (error) {
       console.log("Auth check failed:", error.message);
@@ -51,6 +53,7 @@ export const AuthProvider = ({ children }) => {
         
         // Set auth user
         setAuthUser(data.userData);
+        fetchFriendRequests();
         
         // Connect socket after a brief delay to ensure state updates propagate
         setTimeout(() => {
@@ -173,6 +176,60 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  const searchUser = async (username) => {
+    try {
+      const { data } = await axios.get(`/api/auth/search-user?username=${username}`);
+      return data;
+    } catch (error) {
+      toast.error(error.message);
+      return { success: false, message: error.message };
+    }
+  };
+
+  const sendRequest = async (receiverId) => {
+    try {
+      const { data } = await axios.post("/api/auth/friend-request/send", { receiverId });
+      if (data.success) {
+        toast.success(data.message);
+        return true;
+      } else {
+        toast.error(data.message);
+        return false;
+      }
+    } catch (error) {
+      toast.error(error.message);
+      return false;
+    }
+  };
+
+  const fetchFriendRequests = async () => {
+    try {
+      const { data } = await axios.get("/api/auth/friend-requests");
+      if (data.success) {
+        setPendingRequests(data.requests);
+      }
+    } catch (error) {
+      console.error("Failed to fetch friend requests:", error.message);
+    }
+  };
+
+  const respondRequest = async (requestId, action) => {
+    try {
+      const { data } = await axios.post("/api/auth/friend-request/respond", { requestId, action });
+      if (data.success) {
+        toast.success(data.message);
+        await fetchFriendRequests();
+        return true;
+      } else {
+        toast.error(data.message);
+        return false;
+      }
+    } catch (error) {
+      toast.error(error.message);
+      return false;
+    }
+  };
+
   const value = {
     axios,
     authUser,
@@ -181,6 +238,11 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     updateProfile,
+    pendingRequests,
+    searchUser,
+    sendRequest,
+    fetchFriendRequests,
+    respondRequest,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

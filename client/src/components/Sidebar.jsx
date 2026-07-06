@@ -3,6 +3,8 @@ import assets from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
+import AddFriendModal from "./AddFriendModal";
+import FriendRequestsModal from "./FriendRequestsModal";
 
 const Sidebar = () => {
   const {
@@ -14,8 +16,11 @@ const Sidebar = () => {
     setUnseenMessages,
   } = useContext(ChatContext);
 
-  const { logout, onlineUsers } = useContext(AuthContext);
+  const { logout, onlineUsers, pendingRequests } = useContext(AuthContext);
+  const pendingRequestsCount = pendingRequests ? pendingRequests.length : 0;
 
+  const [isAddFriendOpen, setIsAddFriendOpen] = useState(false);
+  const [isRequestsOpen, setIsRequestsOpen] = useState(false);
   const [input, setInput] = useState(false);
 
   const navigate = useNavigate();
@@ -39,22 +44,46 @@ const Sidebar = () => {
     >
       <div className="pb-5">
         <div className="flex justify-between items-center">
-          <img src={assets.logo} alt="logo" className="max-w-40" />
+          {/* Rebranded Logo */}
+          <div className="flex items-center gap-2 select-none">
+            <img src={assets.logo_icon} alt="logo" className="w-8 aspect-square" />
+            <span className="font-bold text-xl tracking-wide bg-gradient-to-r from-purple-300 to-violet-400 bg-clip-text text-transparent">CrewChat</span>
+          </div>
+
           <div className="relative py-2 group">
             <img
               src={assets.menu_icon}
               alt="menu"
               className="max-h-5 cursor-pointer"
             />
-            <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-[#282142] border border-gray-600 text-gray-100 hidden group-hover:block">
+            <div className="absolute top-full right-0 z-20 w-36 p-4 rounded-md bg-[#282142] border border-gray-600 text-gray-100 hidden group-hover:block shadow-xl">
               <p
                 onClick={() => navigate("/profile")}
-                className="cursor-pointer text-sm"
+                className="cursor-pointer text-sm hover:text-violet-300 transition"
               >
                 Edit Profile
               </p>
-              <hr className="my-2 border-t border-gray-500" />
-              <p onClick={() => logout()} className="cursor-pointer text-sm">
+              <hr className="my-2 border-t border-gray-700" />
+              <p
+                onClick={() => setIsAddFriendOpen(true)}
+                className="cursor-pointer text-sm hover:text-violet-300 transition"
+              >
+                Add Friend
+              </p>
+              <hr className="my-2 border-t border-gray-700" />
+              <p
+                onClick={() => setIsRequestsOpen(true)}
+                className="cursor-pointer text-sm hover:text-violet-300 transition flex items-center justify-between"
+              >
+                Requests
+                {pendingRequestsCount > 0 && (
+                  <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">
+                    {pendingRequestsCount}
+                  </span>
+                )}
+              </p>
+              <hr className="my-2 border-t border-gray-700" />
+              <p onClick={() => logout()} className="cursor-pointer text-sm hover:text-red-400 transition">
                 Logout
               </p>
             </div>
@@ -105,6 +134,16 @@ const Sidebar = () => {
           </div>
         ))}
       </div>
+
+      {/* Friend system modals */}
+      <AddFriendModal
+        isOpen={isAddFriendOpen}
+        onClose={() => setIsAddFriendOpen(false)}
+      />
+      <FriendRequestsModal
+        isOpen={isRequestsOpen}
+        onClose={() => setIsRequestsOpen(false)}
+      />
     </div>
   );
 };

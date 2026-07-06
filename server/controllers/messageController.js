@@ -3,30 +3,35 @@ import User from "../models/User.js";
 import cloudinary from "../lib/cloudinary.js";
 import { io, userSocketMap } from "../server.js";
 
-// Get all users except the logged in user
+// Get all users except the logged in user (Only friends)
 export const getUsersForSidebar = async (req, res) => {
   try {
     const userId = req.user._id;
-    const filteredUsers = await User.find({ _id: { $ne: userId } }).select(
-      "-password"
-    );
+    
+    // Find the current user and populate friends list
+    const currentUser = await User.findById(userId).populate({
+      path: "friends",
+      select: "-password"
+    });
+
+    const friendsList = currentUser.friends || [];
 
     // Count number of messages not seen
     const unseenMessages = {};
-    const promises = filteredUsers.map(async (user) => {
+    const promises = friendsList.map(async (friend) => {
       const messages = await Message.find({
-        senderId: user._id,
+        senderId: friend._id,
         receiverId: userId,
         seen: false,
       });
       if (messages.length > 0) {
-        unseenMessages[user._id] = messages.length;
+        unseenMessages[friend._id] = messages.length;
       }
     });
 
     await Promise.all(promises);
 
-    res.json({ success: true, users: filteredUsers, unseenMessages });
+    res.json({ success: true, users: friendsList, unseenMessages });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
